@@ -135,3 +135,7 @@ AUTH_USER_MODEL = "users.User"
 
 # Authentication backend
 AUTHENTICATION_BACKENDS = ["users.backends.AuthBackend"]
+
+# Media
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
