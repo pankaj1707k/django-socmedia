@@ -8,7 +8,7 @@ from users import forms
 
 def home_view(request):
     if request.user.is_authenticated:
-        return render(request, "posts/feed.html")
+        return redirect("feed")
     return render(request, "users/home.html")
 
 
