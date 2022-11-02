@@ -1,19 +1,19 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect, render
-from django.views import generic
+from django.views import View, generic
 
 from users import forms
 
 
 def home_view(request):
     if request.user.is_authenticated:
-        return render(request, "feed.html")
-    return render(request, "home.html")
+        return render(request, "posts/feed.html")
+    return render(request, "users/home.html")
 
 
 class RegisterView(generic.TemplateView):
-    template_name = "register.html"
+    template_name = "users/register.html"
     form_class = forms.UserRegisterForm
 
     def get_context_data(self, **kwargs) -> dict:
@@ -39,7 +39,7 @@ class RegisterView(generic.TemplateView):
 
 
 class LoginView(generic.TemplateView):
-    template_name = "login.html"
+    template_name = "users/login.html"
     form_class = forms.UserLoginForm
 
     def get_context_data(self, **kwargs) -> dict:
@@ -70,7 +70,7 @@ class LoginView(generic.TemplateView):
         return render(request, self.template_name, context)
 
 
-class LogoutView(generic.TemplateView):
+class LogoutView(View):
     def get(self, request):
         logout(request)
         return redirect("home")
