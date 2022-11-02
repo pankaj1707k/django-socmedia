@@ -2,7 +2,7 @@
 {% block content %}
 <main class="container d-flex flex-column align-items-center">
     {% for post in posts %}
-    <article class="mt-3 border rounded w-50 p-2">
+    <article class="card mt-3 border rounded w-50 p-2">
         <div class="d-flex justify-content-between">
             <p class="fw-bold">
                 {% if post.author.first_name %}
@@ -14,6 +14,7 @@
             <small class="mt-1 text-muted">{{ post.created_on|date:"F j, Y" }}</small>
         </div>
         <img src="{{ post.image.url }}" alt="post_image" class="w-100">
+        <a href="{% url 'post-detail' post.id %}" class="stretched-link"></a>
     </article>
     {% endfor %}
 </main>

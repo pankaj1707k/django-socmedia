@@ -8,3 +8,9 @@ class PostListView(generic.ListView):
     queryset = Post.objects.all()
     context_object_name = "posts"
     ordering = ["-updated_on"]
+
+
+class PostDetailView(generic.DetailView):
+    template_name = "posts/post_detail.html"
+    model = Post
+    context_object_name = "post"
