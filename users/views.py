@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect, render
 from django.views import generic
 
@@ -68,3 +68,9 @@ class LoginView(generic.TemplateView):
         context = self.get_context_data()
         context["form"] = form
         return render(request, self.template_name, context)
+
+
+class LogoutView(generic.TemplateView):
+    def get(self, request):
+        logout(request)
+        return redirect("home")
