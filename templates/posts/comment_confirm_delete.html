@@ -1,0 +1,11 @@
+{% extends "users/base.html" %}
+{% block content %}
+<main class="container">
+    <form method="POST">
+        {% csrf_token %}
+        <legend class="bottom-border my-3">Delete Post</legend>
+        Are you sure you want to delete the comment? <br>
+        <button class="btn btn-primary mt-2" type="submit">Yes, I'm Sure</button>
+    </form>
+</main>
+{% endblock content %}

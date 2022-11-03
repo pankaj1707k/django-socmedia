@@ -82,3 +82,16 @@ class CommentUpdateView(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateV
     def test_func(self):
         comment = self.get_object()
         return comment.author == self.request.user
+
+
+class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, generic.DeleteView):
+    model = Comment
+    template_name = "posts/comment_confirm_delete.html"
+
+    def get_success_url(self) -> str:
+        comment = self.get_object()
+        return f"/posts/{comment.post.id}/"
+
+    def test_func(self):
+        post = self.get_object()
+        return post.author == self.request.user
