@@ -1,10 +1,19 @@
-from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.shortcuts import redirect, render
-from django.views import View, generic
+from django.views import generic
 
 from posts.forms import PostForm
 from posts.models import Post
+
+
+class PostCreateView(LoginRequiredMixin, generic.CreateView):
+    model = Post
+    template_name = "posts/post_form.html"
+    form_class = PostForm
+    success_url = "/"
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
 
 
 class PostListView(generic.ListView):
