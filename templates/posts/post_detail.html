@@ -34,8 +34,10 @@
                 <small class="fw-bold">{{ comment.author }}</small>
                 <p class="p-0">{{ comment.content }}</p>
             </div>
+            {% if user == comment.author %}
             <a href="#" class="btn btn-primary">Edit</a>
             <a href="#" class="btn btn-danger ms-1">Delete</a>
+            {% endif %}
         </li>
         {% endfor %}
     </ul>
