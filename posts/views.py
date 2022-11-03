@@ -1,8 +1,9 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.views import generic
+from django.shortcuts import get_object_or_404, redirect
+from django.views import View, generic
 
 from posts.forms import CommentForm, PostForm
-from posts.models import Comment, Post
+from posts.models import Comment, Like, Post
 
 
 class PostCreateView(LoginRequiredMixin, generic.CreateView):
@@ -95,3 +96,17 @@ class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, generic.DeleteV
     def test_func(self):
         post = self.get_object()
         return post.author == self.request.user
+
+
+class LikeToggleView(LoginRequiredMixin, View):
+    model = Like
+
+    def post(self, request, *args, **kwargs):
+        post = get_object_or_404(Post, pk=self.request.GET.get("ppk"))
+        try:
+            like = self.model.objects.get(post=post, author=self.request.user)
+            like.delete()
+        except self.model.DoesNotExist:
+            like = self.model.objects.create(post=post, author=self.request.user)
+            like.save()
+        return redirect("feed")
