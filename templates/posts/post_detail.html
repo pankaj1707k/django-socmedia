@@ -35,7 +35,7 @@
                 <p class="p-0">{{ comment.content }}</p>
             </div>
             {% if user == comment.author %}
-            <a href="#" class="btn btn-primary">Edit</a>
+            <a href="{% url 'comment-update' comment.id %}" class="btn btn-primary">Edit</a>
             <a href="#" class="btn btn-danger ms-1">Delete</a>
             {% endif %}
         </li>

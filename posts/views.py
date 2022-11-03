@@ -68,3 +68,17 @@ class CommentCreateView(LoginRequiredMixin, generic.CreateView):
         form.instance.author = self.request.user
         form.instance.post = Post.objects.get(pk=self.request.GET.get("ppk"))
         return super().form_valid(form)
+
+
+class CommentUpdateView(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
+    model = Comment
+    template_name = "posts/comment_form.html"
+    form_class = CommentForm
+
+    def get_success_url(self) -> str:
+        comment = self.get_object()
+        return f"/posts/{comment.post.id}/"
+
+    def test_func(self):
+        comment = self.get_object()
+        return comment.author == self.request.user
