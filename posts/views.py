@@ -26,7 +26,12 @@ class PostListView(generic.ListView):
 class PostDetailView(generic.DetailView):
     template_name = "posts/post_detail.html"
     model = Post
-    context_object_name = "post"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["posts"] = Post.objects.all()
+        context["comments"] = Comment.objects.all().order_by("-created_on")
+        return context
 
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):

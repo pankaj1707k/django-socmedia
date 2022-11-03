@@ -25,5 +25,19 @@
     <div class="mt-4">
         <a href="{% url 'comment-add' %}?ppk={{ post.id }}" class="btn btn-primary">Add comment</a>
     </div>
+
+    <!-- Comments -->
+    <ul class="mt-4 list-group">
+        {% for comment in comments %}
+        <li class="list-group-item d-flex justify-content-between align-items-start">
+            <div class="ms-2 me-auto">
+                <small class="fw-bold">{{ comment.author }}</small>
+                <p class="p-0">{{ comment.content }}</p>
+            </div>
+            <a href="#" class="btn btn-primary">Edit</a>
+            <a href="#" class="btn btn-danger ms-1">Delete</a>
+        </li>
+        {% endfor %}
+    </ul>
 </main>
 {% endblock content %}
