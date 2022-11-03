@@ -18,3 +18,17 @@ class Post(models.Model):
 
     def __str__(self) -> str:
         return f"{self.id}__{self.author.username}"
+
+
+class Comment(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    content = models.TextField(_("content"))
+    created_on = models.DateTimeField(_("created_on"), auto_now_add=True)
+    updated_on = models.DateTimeField(_("updated_on"), auto_now=True)
+
+    class Meta:
+        ordering = ["-created_on"]
+
+    def __str__(self) -> str:
+        return f"{self.post.id}__{self.author}"
