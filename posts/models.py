@@ -19,6 +19,11 @@ class Post(models.Model):
     def __str__(self) -> str:
         return f"{self.id}__{self.author.username}"
 
+    def delete(self, *args, **kwargs):
+        storage, path = self.image.storage, self.image.path
+        storage.delete(path)
+        return super().delete(*args, **kwargs)
+
 
 class Comment(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
