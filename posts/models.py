@@ -32,3 +32,15 @@ class Comment(models.Model):
 
     def __str__(self) -> str:
         return f"{self.post.id}__{self.author}"
+
+
+class Like(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    created_on = models.DateTimeField(_("created on"), auto_now_add=True)
+
+    class Meta:
+        ordering = ["-created_on"]
+
+    def __str__(self) -> str:
+        return f"{self.author}__{self.post.id}"
