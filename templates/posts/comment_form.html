@@ -1,0 +1,12 @@
+{% extends "users/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<main class="container">
+    <form class="my-4" method="post">
+        {% csrf_token %}
+        <legend>Add comment</legend>
+        {{ form|crispy }}
+        <button class="btn btn-primary mt-2" type="submit">Post</button>
+    </form>
+</main>
+{% endblock content %}

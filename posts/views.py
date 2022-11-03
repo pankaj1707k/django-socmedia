@@ -1,8 +1,8 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views import generic
 
-from posts.forms import PostForm
-from posts.models import Post
+from posts.forms import CommentForm, PostForm
+from posts.models import Comment, Post
 
 
 class PostCreateView(LoginRequiredMixin, generic.CreateView):
@@ -49,3 +49,17 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, generic.DeleteView
     def test_func(self):
         post = self.get_object()
         return post.author == self.request.user
+
+
+class CommentCreateView(LoginRequiredMixin, generic.CreateView):
+    model = Comment
+    template_name = "posts/comment_form.html"
+    form_class = CommentForm
+
+    def get_success_url(self) -> str:
+        return f"/posts/{self.request.GET.get('ppk')}/"
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        form.instance.post = Post.objects.get(pk=self.request.GET.get("ppk"))
+        return super().form_valid(form)
