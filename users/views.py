@@ -6,10 +6,13 @@ from django.views import View, generic
 from users import forms
 
 
-def home_view(request):
-    if request.user.is_authenticated:
-        return redirect("feed")
-    return render(request, "users/home.html")
+class HomeView(generic.TemplateView):
+    template_name = "users/home.html"
+
+    def get(self, request, *args, **kwargs):
+        if self.request.user.is_authenticated:
+            return redirect("feed")
+        return super().get(request, *args, **kwargs)
 
 
 class RegisterView(generic.TemplateView):
