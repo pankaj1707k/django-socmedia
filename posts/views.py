@@ -31,7 +31,9 @@ class PostDetailView(generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["posts"] = Post.objects.all()
-        context["comments"] = Comment.objects.all().order_by("-created_on")
+        context["comments"] = Comment.objects.filter(post=self.get_object()).order_by(
+            "-created_on"
+        )
         return context
 
 
