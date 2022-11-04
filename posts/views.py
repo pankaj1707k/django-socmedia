@@ -109,4 +109,4 @@ class LikeToggleView(LoginRequiredMixin, View):
         except self.model.DoesNotExist:
             like = self.model.objects.create(post=post, author=self.request.user)
             like.save()
-        return redirect("feed")
+        return redirect("post-detail", pk=post.id)
