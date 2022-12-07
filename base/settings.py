@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 
-import django_on_heroku
 import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -31,7 +30,7 @@ SECRET_KEY = env("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env("DEBUG", bool)
 
-ALLOWED_HOSTS = ["127.0.0.1:8000", "djangosocmedia.herokuapp.com"]
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -141,6 +140,3 @@ AUTHENTICATION_BACKENDS = ["users.backends.AuthBackend"]
 # Media
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
-
-# heroku settings
-django_on_heroku.settings(locals())
